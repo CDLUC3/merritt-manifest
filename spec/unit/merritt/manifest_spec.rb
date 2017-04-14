@@ -89,6 +89,39 @@ module Merritt
           expect(out_fields).not_to be(in_fields)
         end
       end
+
+      describe :entries do
+        it 'accepts a list of entries' do
+
+          in_entries = [
+            {
+              'dom:scienceMetadataFile' => 'mrt-datacite.xml',
+              'dom:scienceMetadataFormat' => 'http://datacite.org/schema/kernel-3.1',
+              'dom:scienceDataFile' => 'Laney_300394_Exempt_Determination_Letter.pdf',
+              'mrt:mimeType' => 'application/pdf'
+            },
+            {
+              'dom:scienceMetadataFile' => 'mrt-oaidc.xml',
+              'dom:scienceMetadataFormat' => 'http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd',
+              'dom:scienceDataFile' => 'Laney_300394_Exempt_Determination_Letter.pdf',
+              'mrt:mimeType' => 'application/pdf'
+            }
+          ]
+
+          manifest = Manifest.new(
+            profile: dataone_profile,
+            fields: %w(dom:scienceMetadataFile dom:scienceMetadataFormat dom:scienceDataFile mrt:mimeType),
+            prefixes: {
+              mrt: 'http://merritt.cdlib.org/terms#',
+              dom: 'http://uc3.cdlib.org/ontology/dataonem'
+            },
+            entries: in_entries
+          )
+
+          out_entries = manifest.entries
+          expect(out_entries).to eq(in_entries)
+        end
+      end
     end
   end
 end
