@@ -1,6 +1,7 @@
 Dir.glob(File.expand_path('../manifest/*.rb', __FILE__)).sort.each(&method(:require))
 
 module Merritt
+  # A Merritt manifest file
   class Manifest
 
     attr_reader :profile
