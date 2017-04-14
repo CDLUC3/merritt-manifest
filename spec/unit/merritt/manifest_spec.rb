@@ -74,7 +74,7 @@ module Merritt
         end
 
         it 'accepts a list of fields' do
-          in_fields = %w(dom:scienceMetadataFile dom:scienceMetadataFormat dom:scienceDataFile mrt:mimeType)
+          in_fields = %w[dom:scienceMetadataFile dom:scienceMetadataFormat dom:scienceDataFile mrt:mimeType]
           manifest = Manifest.new(
             profile: dataone_profile,
             fields: in_fields,
@@ -110,7 +110,7 @@ module Merritt
 
           manifest = Manifest.new(
             profile: dataone_profile,
-            fields: %w(dom:scienceMetadataFile dom:scienceMetadataFormat dom:scienceDataFile mrt:mimeType),
+            fields: %w[dom:scienceMetadataFile dom:scienceMetadataFormat dom:scienceDataFile mrt:mimeType],
             prefixes: {
               mrt: 'http://merritt.cdlib.org/terms#',
               dom: 'http://uc3.cdlib.org/ontology/dataonem'

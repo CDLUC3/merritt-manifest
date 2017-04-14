@@ -5,7 +5,7 @@ module Merritt
   class Manifest
 
     # Base for all recognized profile URIs
-    PROFILE_BASE_URI = 'http://uc3.cdlib.org/registry/ingest/manifest/'
+    PROFILE_BASE_URI = 'http://uc3.cdlib.org/registry/ingest/manifest/'.freeze
 
     # @return [URI] the profile URI
     attr_reader :profile
@@ -63,18 +63,18 @@ module Merritt
 
     def validate_field(field)
       prefix, fieldname = field.split(':')
-      raise ArgumentError "Unknown prefix in field '#{field}': #{prefix}" unless prefixes.has_key?(prefix.to_sym)
+      raise ArgumentError "Unknown prefix in field '#{field}': #{prefix}" unless prefixes.key?(prefix.to_sym)
       raise ArgumentError "Field '#{field}' cannot be parsed as prefix:fieldname" unless fieldname
       field
     end
 
     def normalize_prefixes(prefixes)
       return {} unless prefixes
-      prefixes.map { |k, v| [k.to_sym, Util::to_uri(v)] }.to_h
+      prefixes.map { |k, v| [k.to_sym, Util.to_uri(v)] }.to_h
     end
 
     def normalize_profile_uri(profile)
-      profile_uri = Util::to_uri(profile)
+      profile_uri = Util.to_uri(profile)
       raise ArgumentError, "Invalid profile: #{profile || 'nil'}" unless profile_uri &&
         profile_uri.to_s.start_with?(PROFILE_BASE_URI)
       profile_uri.clone # defensive copy
