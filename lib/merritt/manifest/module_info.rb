@@ -1,5 +1,5 @@
 module Merritt
-  module Manifest
+  class Manifest
     # The name of this gem
     NAME = 'merritt-manifest'.freeze
 

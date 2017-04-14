@@ -25,3 +25,7 @@ Style/EmptyLinesAroundBlockBody:
 # Unclear why it's a good idea to give parameters semantically meaningless names
 Style/SingleLineBlockParams:
   Enabled: false
+
+# Produces monsters
+Style/MultilineOperationIndentation:
+  Enabled: false
