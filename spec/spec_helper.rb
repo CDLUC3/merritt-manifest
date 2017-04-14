@@ -26,4 +26,4 @@ end
 # ------------------------------------------------------------
 # Merritt::Manifest
 
-require 'merritt/manifest'
+require 'merritt'
