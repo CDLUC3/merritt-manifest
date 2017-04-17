@@ -15,6 +15,13 @@ module Merritt
         expect(manifest).to be_a(Manifest)
       end
 
+      describe :conformance do
+        it 'defaults to CheckM 0.7' do
+          manifest = Manifest.new(profile: dataone_profile)
+          expect(manifest.conformance).to eq('checkm_0.7')
+        end
+      end
+
       describe :profile do
         it 'accepts a string' do
           profile_str = dataone_profile

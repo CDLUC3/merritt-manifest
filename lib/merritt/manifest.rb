@@ -7,6 +7,12 @@ module Merritt
     # Base for all recognized profile URIs
     PROFILE_BASE_URI = 'http://uc3.cdlib.org/registry/ingest/manifest/'.freeze
 
+    # Checkm 0.7 conformance level
+    CHECKM_0_7 = 'checkm_0.7'.freeze
+
+    # @return [String] the conformance level
+    attr_reader :conformance
+
     # @return [URI] the profile URI
     attr_reader :profile
 
@@ -22,6 +28,7 @@ module Merritt
     # Creates a new manifest. Note that the prefix, field, and entry arrays are
     # copied on initialization, as are the individual entry hashes.
     #
+    # @param conformance [String] the conformance level. Defaults to {CHECKM_0_7}.
     # @param profile [URI, String] the profile URI. Must begin with
     # @param prefixes [Hash{String,Symbol => URI, String}] a map from namespace prefixes to their URIs
     # @param fields Array<String> a list of field names, in the form prefix:fieldname
@@ -31,7 +38,8 @@ module Merritt
     # @raise [ArgumentError] if `fields` cannot be parsed as prefix:fieldname, or if one or more prefixes
     #   is not mapped to a URI in `prefixes`
     # @raise [URI::InvalidURIError] if `profile` cannot be parsed as a URI
-    def initialize(profile:, prefixes: {}, fields: [], entries: [])
+    def initialize(conformance: CHECKM_0_7, profile:, prefixes: {}, fields: [], entries: [])
+      @conformance = conformance
       @profile = normalize_profile_uri(profile).freeze
       @prefixes = normalize_prefixes(prefixes).freeze
       @fields = validate_fields(fields).freeze
