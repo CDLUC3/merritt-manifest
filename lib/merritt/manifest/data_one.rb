@@ -2,10 +2,10 @@ module Merritt
   class Manifest
     class DataONE < Manifest
 
-      METADATA_FILE = 'dom:scienceMetadataFile'
-      METADATA_FORMAT = 'dom:scienceMetadataFormat'
-      DATA_FILE = 'dom:scienceDataFile'
-      MIME_TYPE = 'mrt:mimeType'
+      METADATA_FILE = 'dom:scienceMetadataFile'.freeze
+      METADATA_FORMAT = 'dom:scienceMetadataFormat'.freeze
+      DATA_FILE = 'dom:scienceDataFile'.freeze
+      MIME_TYPE = 'mrt:mimeType'.freeze
 
       METADATA_FILES = {
         'mrt-datacite.xml' => 'http://datacite.org/schema/kernel-3.1',
@@ -29,7 +29,7 @@ module Merritt
       private
 
       def to_entries(files)
-        rows = files.to_a.product(METADATA_FILES.to_a).map { |p| p.flatten }
+        rows = files.to_a.product(METADATA_FILES.to_a).map(&:flatten)
         rows.map do |file_name, file_type, md_name, md_url|
           {
             METADATA_FILE => md_name,
