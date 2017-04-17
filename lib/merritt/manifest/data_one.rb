@@ -1,18 +1,9 @@
 module Merritt
   class Manifest
+    # A specialization of {Manifest} for DataONE.
     class DataONE < Manifest
-
-      METADATA_FILE = 'dom:scienceMetadataFile'.freeze
-      METADATA_FORMAT = 'dom:scienceMetadataFormat'.freeze
-      DATA_FILE = 'dom:scienceDataFile'.freeze
-      MIME_TYPE = 'mrt:mimeType'.freeze
-
-      METADATA_FILES = {
-        'mrt-datacite.xml' => 'http://datacite.org/schema/kernel-3.1',
-        'mrt-oaidc.xml' => 'http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd'
-      }.freeze
-
-      # @param files [Hash{String => MIME::Type}] a map from file names ot types
+      # Creates a new {Manifest::DataONE}
+      # @param files [Hash{String => MIME::Type}] a map from file names to types
       def initialize(files:)
         super(
           conformance: 'dataonem_0.1',
@@ -27,6 +18,16 @@ module Merritt
       end
 
       private
+
+      METADATA_FILE = 'dom:scienceMetadataFile'.freeze
+      METADATA_FORMAT = 'dom:scienceMetadataFormat'.freeze
+      DATA_FILE = 'dom:scienceDataFile'.freeze
+      MIME_TYPE = 'mrt:mimeType'.freeze
+
+      METADATA_FILES = {
+        'mrt-datacite.xml' => 'http://datacite.org/schema/kernel-3.1',
+        'mrt-oaidc.xml' => 'http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd'
+      }.freeze
 
       def to_entries(files)
         rows = files.to_a.product(METADATA_FILES.to_a).map(&:flatten)
