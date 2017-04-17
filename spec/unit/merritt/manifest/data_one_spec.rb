@@ -7,19 +7,19 @@ module Merritt
 
     before(:each) do
       @files = {
-        'survey/Q11-23/sensors_platforms.R' => 'text/plain',
-        'survey/Q25-32/data_metadata_management.R' => 'text/plain',
-        'survey/Q10/research_sites.R' => 'text/plain',
-        'clean_survey_data_no_ids.csv' => 'text/csv',
-        'survey/Q3-9/respondent_info.R' => 'text/plain',
-        'Laney_IRBProposal.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'survey_data_prep.R' => 'text/plain',
-        'research_coords.csv' => 'text/csv',
         'Laney_300394_Exempt_Determination_Letter.pdf' => 'application/pdf',
-        'survey/Q33-37/networking.R' => 'text/plain',
+        'Laney_IRBProposal.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'SensorSurvey_Printout.pdf' => 'application/pdf',
+        'clean_survey_data_no_ids.csv' => 'text/csv',
+        'research_coords.csv' => 'text/csv',
+        'survey/Q10/research_sites.R' => 'text/plain',
+        'survey/Q11-23/sensors_platforms.R' => 'text/plain',
         'survey/Q24/limitsToExpansion.R' => 'text/plain',
-        'survey/Q38-42/publications.R' => 'text/plain'
+        'survey/Q25-32/data_metadata_management.R' => 'text/plain',
+        'survey/Q3-9/respondent_info.R' => 'text/plain',
+        'survey/Q33-37/networking.R' => 'text/plain',
+        'survey/Q38-42/publications.R' => 'text/plain',
+        'survey_data_prep.R' => 'text/plain'
       }
       @manifest = Manifest::DataONE.new(files: files)
     end
@@ -82,5 +82,21 @@ module Merritt
         end
       end
     end
+
+    describe :write_manifest do
+      it 'writes a DataONE manifest' do
+        path = 'mrt-dataone-manifest.txt'
+        expected = File.read("spec/data/#{path}")
+        actual = manifest.write_to_string
+        if actual != expected
+          now = Time.now.to_i
+          FileUtils.mkdir('tmp') unless File.directory?('tmp')
+          File.open("tmp/#{now}-expected-#{path}", 'w') { |f| f.write(expected) }
+          File.open("tmp/#{now}-actual-#{path}", 'w') { |f| f.write(actual) }
+        end
+        expect(actual).to eq(expected)
+      end
+    end
+
   end
 end

@@ -46,7 +46,39 @@ module Merritt
       @entries = normalize_entries(entries).freeze
     end
 
+    # Writes this manifest to the specified IO
+    # @param io [IO] the IO to write to
+    def write_to(io) # rubocop:disable Metrics/AbcSize
+      write_sc(io, conformance)
+      write_sc(io, 'profile', profile)
+      prefixes.each { |prefix, url| write_sc(io, 'prefix', "#{prefix}:", url) }
+      write_sc(io, 'fields', *fields)
+      entries.each { |entry| io.puts(fields.map { |f| entry[f] }.join(COLSEP)) }
+      write_sc(io, 'eof')
+    end
+
+    # Writes this manifest as a string
+    # @return [String] the manifest file contents as a string
+    def write_to_string
+      io = StringIO.new
+      write_to(io)
+      io.string
+    end
+
     private
+
+    # checkm column separator
+    COLSEP = ' | '.freeze
+
+    # writes a checkm "structured comment"
+    # @param io [IO] the IO to write to
+    # @param comment [String] the comment
+    # @param columns [nil, Array<String>] columns to follow the initial comment
+    def write_sc(io, comment, *columns)
+      io << '#%' << comment
+      io << COLSEP << columns.join(COLSEP) unless columns.empty?
+      io << "\n"
+    end
 
     def normalize_entries(entries)
       entries.each_with_index.map do |entry, i|
