@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ostruct'
 
 module Merritt
   describe Manifest::DataONE do
@@ -20,7 +21,7 @@ module Merritt
         'survey/Q33-37/networking.R' => 'text/plain',
         'survey/Q38-42/publications.R' => 'text/plain',
         'survey_data_prep.R' => 'text/plain'
-      }
+      }.map { |name, type| OpenStruct.new(name: name, type: type) }
       @manifest = Manifest::DataONE.new(files: files)
     end
 
@@ -64,9 +65,7 @@ module Merritt
 
       it 'converts files to entries' do
         expect(entries.size).to eq(2 * files.size)
-        files.to_a.each_with_index do |file, index|
-          file_name, file_type = file
-
+        files.each_with_index do |file, index|
           dcs_index = 2 * index
           dcs_entry = entries[dcs_index]
           oai_entry = entries[1 + dcs_index]
@@ -76,8 +75,8 @@ module Merritt
           expect(oai_entry['dom:scienceMetadataFormat']).to eq('http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd')
 
           [dcs_entry, oai_entry].each do |entry|
-            expect(entry['dom:scienceDataFile']).to eq(file_name)
-            expect(entry['mrt:mimeType']).to eq(file_type)
+            expect(entry['dom:scienceDataFile']).to eq(file.name)
+            expect(entry['mrt:mimeType']).to eq(file.type)
           end
         end
       end

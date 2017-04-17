@@ -2,8 +2,20 @@ module Merritt
   class Manifest
     # A specialization of {Manifest} for DataONE.
     class DataONE < Manifest
+
+      # A marker interface for file-like objects
+      module File
+        # @return [String] the name of this file
+        attr_reader :name
+
+        # @return [String, MIME::Type] the MIME type of this file
+        attr_reader :type
+      end
+
       # Creates a new {Manifest::DataONE}
-      # @param files [Hash{String => MIME::Type}] a map from file names to types
+      # @param files [Array<Manifest::DataONE::File>] an array of data files to be converted to entries.
+      #   (Note that these not be actual {Manifest::DataONE::File} objects so long as they respond to
+      #   `#name` and `#type`)
       def initialize(files:)
         super(
           conformance: 'dataonem_0.1',
@@ -30,13 +42,13 @@ module Merritt
       }.freeze
 
       def to_entries(files)
-        rows = files.to_a.product(METADATA_FILES.to_a).map(&:flatten)
-        rows.map do |file_name, file_type, md_name, md_url|
+        rows = files.product(METADATA_FILES.to_a).map(&:flatten)
+        rows.map do |file, md_name, md_url|
           {
             METADATA_FILE => md_name,
             METADATA_FORMAT => md_url,
-            DATA_FILE => file_name,
-            MIME_TYPE => file_type
+            DATA_FILE => file.name,
+            MIME_TYPE => file.type
           }
         end
       end
