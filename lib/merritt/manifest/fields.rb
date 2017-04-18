@@ -46,13 +46,12 @@ module Merritt
         end
 
         def url_for(prefix)
+          # noinspection RubyCaseWithoutElseBlockInspection
           case prefix.to_sym
           when :mrt
             'http://merritt.cdlib.org/terms#'
           when :nfo
             'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#'
-          else
-            raise "Unknown prefix #{prefix}"
           end
         end
       end
