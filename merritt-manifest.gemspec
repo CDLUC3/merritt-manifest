@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['David Moles']
   spec.email         = ['david.moles@ucop.edu']
   spec.summary       = 'Merritt manifest generation library'
-  spec.description   = 'Merritt manifest generation library'
+  spec.description   = 'A library for creating Merritt text-based manifests (a specialization of the Checkm text-based manifest format).'
   spec.license       = 'MIT'
 
   origin = `git config --get remote.origin.url`.chomp
