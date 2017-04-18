@@ -29,3 +29,7 @@ Style/SingleLineBlockParams:
 # Produces monsters
 Style/MultilineOperationIndentation:
   Enabled: false
+
+# 👎 to cultural imperialism
+Style/AsciiComments:
+  Enabled: false

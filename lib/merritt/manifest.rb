@@ -48,12 +48,12 @@ module Merritt
 
     # Writes this manifest to the specified IO
     # @param io [IO] the IO to write to
-    def write_to(io) # rubocop:disable Metrics/AbcSize
+    def write_to(io)
       write_sc(io, conformance)
       write_sc(io, 'profile', profile)
       prefixes.each { |prefix, url| write_sc(io, 'prefix', "#{prefix}:", url) }
       write_sc(io, 'fields', *fields)
-      entries.each { |entry| io.puts(fields.map { |f| entry[f] }.join(COLSEP)) }
+      entries.each { |entry| io.puts(entry_line(entry)) }
       write_sc(io, 'eof')
     end
 
@@ -69,6 +69,10 @@ module Merritt
 
     # checkm column separator
     COLSEP = ' | '.freeze
+
+    def entry_line(entry)
+      fields.map { |f| entry[f] }.join(COLSEP).sub(/[| ]+\z/, '')
+    end
 
     # writes a checkm "structured comment"
     # @param io [IO] the IO to write to

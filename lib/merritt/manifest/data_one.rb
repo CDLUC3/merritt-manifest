@@ -3,18 +3,9 @@ module Merritt
     # A specialization of {Manifest} for DataONE.
     class DataONE < Manifest
 
-      # A marker interface for file-like objects
-      module File
-        # @return [String] the name of this file
-        attr_reader :name
-
-        # @return [String, MIME::Type] the MIME type of this file
-        attr_reader :type
-      end
-
       # Creates a new {Manifest::DataONE}
-      # @param files [Array<Manifest::DataONE::File>] an array of data files to be converted to entries.
-      #   (Note that these not be actual {Manifest::DataONE::File} objects so long as they respond to
+      # @param files [Array<Manifest::File>] an array of data files to be converted to entries.
+      #   (Note that these not be actual {Manifest::File} objects so long as they respond to
       #   `#name` and `#type`)
       def initialize(files:)
         super(
