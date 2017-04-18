@@ -1,4 +1,5 @@
 require 'typesafe_enum'
+require 'mime-types'
 require 'uri'
 
 module Merritt
@@ -112,7 +113,13 @@ module Merritt
         end
 
         # field for `mrt:mimeType`
-        new :MIME_TYPE, 'mrt:mimeType'
+        new :MIME_TYPE, 'mrt:mimeType' do
+          def value_from(obj)
+            value = super(obj)
+            return value if value.nil? || value.is_a?(::MIME::Type)
+            ::MIME::Types[value.to_s].first
+          end
+        end
       end
     end
   end
