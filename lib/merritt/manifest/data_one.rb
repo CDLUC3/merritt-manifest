@@ -1,3 +1,5 @@
+require 'merritt/manifest/fields'
+
 module Merritt
   class Manifest
     # A specialization of {Manifest} for DataONE.
@@ -6,7 +8,7 @@ module Merritt
       # Creates a new {Manifest::DataONE}
       # @param files [Array<Manifest::File>] an array of data files to be converted to entries.
       #   (Note that these not be actual {Manifest::File} objects so long as they respond to
-      #   `#name` and `#type`)
+      #   `#file_name` and `#mime_type`)
       def initialize(files:)
         super(
           conformance: 'dataonem_0.1',
@@ -38,8 +40,8 @@ module Merritt
           {
             METADATA_FILE => md_name,
             METADATA_FORMAT => md_url,
-            DATA_FILE => file.name,
-            MIME_TYPE => file.type
+            DATA_FILE => file.file_name,
+            MIME_TYPE => Merritt::Manifest::Fields::Object::MIME_TYPE.value_from(file)
           }
         end
       end

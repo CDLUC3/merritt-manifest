@@ -21,7 +21,7 @@ module Merritt
         'survey/Q33-37/networking.R' => 'text/plain',
         'survey/Q38-42/publications.R' => 'text/plain',
         'survey_data_prep.R' => 'text/plain'
-      }.map { |name, type| OpenStruct.new(name: name, type: type) }
+      }.map { |name, type| OpenStruct.new(file_name: name, mime_type: type) }
       @manifest = Manifest::DataONE.new(files: files)
     end
 
@@ -75,8 +75,8 @@ module Merritt
           expect(oai_entry['dom:scienceMetadataFormat']).to eq('http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd')
 
           [dcs_entry, oai_entry].each do |entry|
-            expect(entry['dom:scienceDataFile']).to eq(file.name)
-            expect(entry['mrt:mimeType']).to eq(file.type)
+            expect(entry['dom:scienceDataFile']).to eq(file.file_name)
+            expect(entry['mrt:mimeType']).to eq(file.mime_type)
           end
         end
       end
