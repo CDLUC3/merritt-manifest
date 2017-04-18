@@ -14,7 +14,7 @@ module Merritt
       # @return [nil, String] the hash value
       attr_reader :hash_value
 
-      # @return [nil, Integer] the file size in bytes
+      # @return [nil, Integer] the file size in bytes.
       attr_reader :file_size
 
       # @return [nil, DateTime] date and time the file was last modified.

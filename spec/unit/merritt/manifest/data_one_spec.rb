@@ -82,7 +82,7 @@ module Merritt
       end
     end
 
-    describe :write_manifest do
+    describe :write_to_string do
       it 'writes a DataONE manifest' do
         path = 'mrt-dataone-manifest.txt'
         expected = File.read("spec/data/#{path}")
@@ -97,5 +97,26 @@ module Merritt
       end
     end
 
+    describe :write_to_file do
+      it 'writes to a file' do
+        file = Tempfile.new('manifest.txt')
+        begin
+          manifest.write_to(file)
+          file.close
+          actual = IO.read(file.path)
+          path = 'mrt-dataone-manifest.txt'
+          expected = File.read("spec/data/#{path}")
+          actual = manifest.write_to_string
+          if actual != expected
+            now = Time.now.to_i
+            FileUtils.mkdir('tmp') unless File.directory?('tmp')
+            File.open("tmp/#{now}-expected-#{path}", 'w') { |f| f.write(expected) }
+            File.open("tmp/#{now}-actual-#{path}", 'w') { |f| f.write(actual) }
+          end
+        ensure
+          file.delete
+        end
+      end
+    end
   end
 end

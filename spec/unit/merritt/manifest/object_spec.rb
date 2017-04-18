@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'ostruct'
+require 'tempfile'
 
 module Merritt
   describe Manifest::Object do
@@ -27,7 +28,7 @@ module Merritt
         @manifest = Manifest::Object.new(files: files)
       end
 
-      describe :write_manifest do
+      describe :write_to_string do
         it 'writes an object manifest' do
           path = '4blocks.checkm'
           expected = File.read("spec/data/#{path}")
@@ -39,6 +40,28 @@ module Merritt
             File.open("tmp/#{now}-actual-#{path}", 'w') { |f| f.write(actual) }
           end
           expect(actual).to eq(expected)
+        end
+      end
+
+      describe :write_to_file do
+        it 'writes to a file' do
+          file = Tempfile.new('manifest.checkm')
+          begin
+            manifest.write_to(file)
+            file.close
+            actual = IO.read(file.path)
+            path = '4blocks.checkm'
+            expected = File.read("spec/data/#{path}")
+            actual = manifest.write_to_string
+            if actual != expected
+              now = Time.now.to_i
+              FileUtils.mkdir('tmp') unless File.directory?('tmp')
+              File.open("tmp/#{now}-expected-#{path}", 'w') { |f| f.write(expected) }
+              File.open("tmp/#{now}-actual-#{path}", 'w') { |f| f.write(actual) }
+            end
+          ensure
+            file.delete
+          end
         end
       end
     end
