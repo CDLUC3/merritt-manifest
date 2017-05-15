@@ -117,7 +117,7 @@ module Merritt
           def value_from(obj)
             value = super(obj)
             return value if value.nil? || value.is_a?(::MIME::Type)
-            ::MIME::Types[value.to_s].first
+            ::MIME::Types[value.to_s].first || value.to_s
           end
         end
       end
