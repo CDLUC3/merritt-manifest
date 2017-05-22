@@ -50,6 +50,26 @@ module Merritt
           expect(actual).to eq(expected)
         end
       end
+
+      describe :MIME_TYPE do
+        it 'extracts the mime type' do
+          mime_type = 'text/html'
+          obj = OpenStruct.new(mime_type: mime_type)
+          mt_val = ::MIME::Types[mime_type].first
+          expect(mt_val).not_to be_nil # just to be sure
+          actual = Manifest::Fields::Object::MIME_TYPE.value_from(obj)
+          expect(actual).to eq(mt_val.to_s)
+        end
+
+        it 'accepts unknown or garbage types' do
+          mime_type = 'I am not a mime type, but whatever'
+          obj = OpenStruct.new(mime_type: mime_type)
+          mt_val = ::MIME::Types[mime_type].first
+          expect(mt_val).to be_nil # just to be sure
+          actual = Manifest::Fields::Object::MIME_TYPE.value_from(obj)
+          expect(actual).to eq(mime_type)
+        end
+      end
     end
   end
 end
