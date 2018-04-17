@@ -30,7 +30,7 @@ module Merritt
       MIME_TYPE = 'mrt:mimeType'.freeze
 
       METADATA_FILES = {
-        'mrt-datacite.xml' => 'http://datacite.org/schema/kernel-3.1',
+        'mrt-datacite.xml' => 'http://datacite.org/schema/kernel-4',
         'mrt-oaidc.xml' => 'http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd'
       }.freeze
 

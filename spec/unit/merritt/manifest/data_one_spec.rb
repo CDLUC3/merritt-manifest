@@ -71,7 +71,7 @@ module Merritt
           oai_entry = entries[1 + dcs_index]
           expect(dcs_entry['dom:scienceMetadataFile']).to eq('mrt-datacite.xml')
           expect(oai_entry['dom:scienceMetadataFile']).to eq('mrt-oaidc.xml')
-          expect(dcs_entry['dom:scienceMetadataFormat']).to eq('http://datacite.org/schema/kernel-3.1')
+          expect(dcs_entry['dom:scienceMetadataFormat']).to eq('http://datacite.org/schema/kernel-4')
           expect(oai_entry['dom:scienceMetadataFormat']).to eq('http://dublincore.org/schemas/xmls/qdc/2008/02/11/qualifieddc.xsd')
 
           [dcs_entry, oai_entry].each do |entry|
