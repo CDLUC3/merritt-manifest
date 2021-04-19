@@ -1,7 +1,8 @@
-# Merritt::Manifest
+# Merritt Manifest Tools
 
-[![Build Status](https://travis-ci.org/dmolesUC3/merritt-manifest.svg)](https://travis-ci.org/dmolesUC3/merritt-manifest)
-[![Inline docs](http://inch-ci.org/github/dmolesUC3/merritt-manifest.svg)](http://inch-ci.org/github/dmolesUC3/merritt-manifest)
+This library is part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
+
+## Purpose
 
 A library for creating [Merritt](https://merritt.cdlib.org/) [text-based manifests](https://merritt.cdlib.org/help/manifest_guide#text_tips) (a specialization of the [Checkm](https://wiki.ucop.edu/display/Curation/Checkm) text-based manifest format).
 
