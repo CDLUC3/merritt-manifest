@@ -2,6 +2,12 @@
 
 This library is part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
 
+## 
+
+This library is not likely in active use, but it has been shared to RubyGems.
+
+See https://rubygems.org/gems/merritt-manifest
+
 ## Purpose
 
 A library for creating [Merritt](https://merritt.cdlib.org/) [text-based manifests](https://merritt.cdlib.org/help/manifest_guide#text_tips) (a specialization of the [Checkm](https://wiki.ucop.edu/display/Curation/Checkm) text-based manifest format).
